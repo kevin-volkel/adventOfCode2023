@@ -1007,45 +1007,53 @@ xtwone3four
 zoneight234
 7pqrstsixteen`
 
-let partOne = () => {
+let partOne = (input) => {
     input = input.split('\n');
+    numbersArr = [];
     total = input.map( (line) => {
         num = "";
         numbers = line.split('').filter( (value) => !isNaN(value)).join('');
-        return [numbers[0], numbers[numbers.length - 1]].join('');
-    }).reduce( (curr, total) => +curr + +total);
+        // console.log([numbers[0], numbers[numbers.length - 1]].join(''), line)
+        numbersArr.push([numbers[0], numbers[numbers.length - 1]].join(''));
+    });
+
     
-    return total;
+    
+    return numbersArr.reduce( (total, curr) => +curr + +total);
 }
 
-let partTwo = () => {
-    numbersObj = {
-        "one" : 1,
-        "two" : 2,
-        "three" : 3,
-        "four" : 4,
-        "five" : 5,
-        "six" : 6,
-        "seven" : 7,
-        "eight" : 8,
-        "nine" : 9
+let partTwo = (input) => {
+    
+    let numberObj = {
+      "one": 1,
+      "two": 2,
+      "three": 3,
+      "four": 4,
+      "five": 5,
+      "six": 6,
+      "seven": 7,
+      "eight": 8,
+      "nine": 9,
+    }
+
+
+    regex = /(one)|(two)|(three)|(four)|(five)|(six)|(seven)|(eight)|(nine)/g;
+
+    input = input.split('\n');
+    input = input.map( (line) => {
+      matches = line.match(regex)
+      newLine = line
+      if(matches != null) {
+        for(match of matches){
+          newLine = newLine.replace(match, numberObj[match])
+        }        
+      }
+      return newLine
+    })
+
+
+    return partOne(input.join('\n'))
 }
 
-    input = testInput.split('\n');
-    total = input.map( (line) => {
-        num = "";
-        str = "";
 
-        for(let i = 0; i < line.length; i++){
-            
-        }
-
-        numbers = line.split('').filter( (value) => !isNaN(value)).join('');
-        return [numbers[0], numbers[numbers.length - 1]].join('');
-    }).reduce( (curr, total) => +curr + +total);
-
-    return total;
-}
-
-
-console.log(partTwo());
+console.log(partTwo(input));
